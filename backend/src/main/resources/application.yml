@@ -1,0 +1,16 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/marketdrift}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+app:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  market-data:
+    provider: ${MARKET_DATA_PROVIDER:polygon}
+    api-key: ${MARKET_DATA_API_KEY:replace-me}

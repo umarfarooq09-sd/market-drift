@@ -1,0 +1,16 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+backend/target/
+
+# Local configuration
+.env
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
