@@ -22,7 +22,13 @@ Open `http://localhost:5173`. Demo login values are already filled in.
 
 ## Run the backend
 
-Set values from `.env.example`, then:
+For local PostgreSQL, start the included database:
+
+```powershell
+docker compose up -d postgres
+```
+
+Flyway automatically creates the schema and inserts demo market data when the backend starts. Then:
 
 ```powershell
 cd backend
@@ -34,6 +40,14 @@ API endpoints:
 - `GET /api/market/movers?direction=up&percent=10&search=NVDA`
 - `GET /api/market/breadth`
 - `GET /api/market/stocks/NVDA/history`
+
+## Neon database
+
+1. Create a Neon project and copy its pooled connection details.
+2. Set `DATABASE_URL`, `DATABASE_USER`, and `DATABASE_PASSWORD` using `.env.example`.
+3. Start the backend. Flyway applies migrations from `backend/src/main/resources/db/migration`.
+
+The database enforces one snapshot per stock symbol and trading date. Indexed fields support date-based movement scans and symbol history queries.
 
 ## Live market data
 

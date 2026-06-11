@@ -12,13 +12,13 @@ public class MarketController {
 
   @GetMapping("/movers")
   public List<StockSnapshot> movers(@RequestParam(defaultValue="up") String direction,@RequestParam(defaultValue="5") int percent,@RequestParam(defaultValue="") String search,@RequestParam(required=false) LocalDate date){
-    var rows=repository.findByTradingDateAndSymbolContainingIgnoreCaseOrderByChangePercentDesc(date==null?LocalDate.now():date,search);
+    var rows=repository.searchOnDate(date==null?LocalDate.now():date,search);
     var threshold=BigDecimal.valueOf(percent);
     return rows.stream().filter(s->direction.equalsIgnoreCase("down")?s.changePercent.compareTo(threshold.negate())<=0:s.changePercent.compareTo(threshold)>=0).toList();
   }
   @GetMapping("/breadth")
   public Map<String,Long> breadth(@RequestParam(required=false) LocalDate date){
-    var rows=repository.findByTradingDateAndSymbolContainingIgnoreCaseOrderByChangePercentDesc(date==null?LocalDate.now():date,"");
+    var rows=repository.searchOnDate(date==null?LocalDate.now():date,"");
     var result=new LinkedHashMap<String,Long>();
     for(int p:new int[]{5,10,20,30}){var t=BigDecimal.valueOf(p);result.put("up"+p,rows.stream().filter(s->s.changePercent.compareTo(t)>=0).count());result.put("down"+p,rows.stream().filter(s->s.changePercent.compareTo(t.negate())<=0).count());}
     return result;
