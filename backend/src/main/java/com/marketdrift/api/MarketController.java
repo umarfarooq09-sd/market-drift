@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController @RequestMapping("/api/market")
-@CrossOrigin(origins="${app.frontend-url:http://localhost:5173}")
+@CrossOrigin(origins="*")
 public class MarketController {
   private final StockRepository repository;
   public MarketController(StockRepository repository){this.repository=repository;}
